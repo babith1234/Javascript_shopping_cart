@@ -44,3 +44,58 @@ section{
  
 
 /*--------------------Cart------------------------- */
+
+.cart-heading{
+    text-align: center;
+    margin-top: 40px;
+}
+.purchase{
+    display: flex;
+    height: 170px;
+    width: 46%;
+    border: 2px solid black;
+    margin-left: 351px;
+    background-color: rgb(255, 255, 255);
+}
+
+.image img{
+    height: 161px;
+    padding-left: 20px;
+}
+.cart-body{
+    margin-top: 40px;
+}
+
+.info{
+    padding-left:150px;
+    padding-top: 20px;
+}
+
+.del{
+    padding-left: 20px;
+}
+
+.bx{
+   padding-left: 40px;
+    
+}
+
+.btn{
+   
+    margin-top:71px;
+    margin-left: 29px;
+}
+.btn button{
+    height: 35px;
+    width: 100px;
+    background-color: crimson;
+    border: 2px solid black;
+    border-radius: 24px;
+    color: white;
+}
+input{
+    height: 24px;
+}
+
+
+
