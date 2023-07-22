@@ -6,6 +6,9 @@
     box-sizing: border-box;
     font-family: 'Belanosima', sans-serif;
 }
+i{
+    cursor: pointer;
+}
 /*--------------------------Home-------------------------*/
 
 nav{
@@ -95,6 +98,9 @@ section{
 }
 input{
     height: 24px;
+}
+.Final_cost{
+    padding-top: 140px;
 }
 
 
