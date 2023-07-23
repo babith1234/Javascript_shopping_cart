@@ -103,5 +103,31 @@ input{
     padding-top: 140px;
 }
 
+/**************CART***********************/
+.shopping-cart{
+    display: grid;
+    grid-template-columns: repeat(1,320px);
+    justify-content: center;
+    gap: 10px;
+}
+
+.cart-item{
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+   
+}
+.Submit{
+    margin-top: 40px;
+}
+.Submit button{
+    height: 40px;
+    width: 100px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: crimson;
+    color: white;
+
+}
 
 

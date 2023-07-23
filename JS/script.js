@@ -1,51 +1,53 @@
-let basket = JSON.parse(localStorage.getItem("data"))|| [];
+let shoppingCart = document.getElementById("shopping-cart")
+let select_del = document.querySelectorAll(".bx.bx-x-circle")
+
 let data = [
   {
     id:"item-1",
     name:"Wildcraft bag",
-    price:$200,
+    price:200,
     img:"../images/bag.png",
   },
   {
     id:"item-2",
     name:"Polino bag",
-    price:$300,
+    price:300,
     img:"../images/bag2.png",
   },
   {
     id:"item-3",
     name:"Adidas bag",
-    price:$206,
+    price:206,
     img:"../images/bag3.png",
   },
   {
     id:"item-4",
     name:"Nike bag",
-    price:$270,
+    price:270,
     img:"../images/bag4.png",
   },
   {
     id:"item-5",
     name:"Pole star bag",
-    price:$200,
+    price:200,
     img:"../images/bag5.png",
   },
   {
     id:"item-6",
     name:"wildcraft bag",
-    price:$500,
+    price:500,
     img:"../images/bag6.png",
   },
   {
     id:"item-7",
     name:"Puma bag",
-    price:$300,
+    price:300,
     img:"../images/bag7.png",
   },
   {
     id:"item-8",
     name:"Adobe bag",
-    price:$204,
+    price:204,
     img:"../images/bag8.png",
   }
 ]
@@ -53,34 +55,92 @@ let data = [
 
 function addToCart(itemId) {
   const item = document.getElementById(itemId);
-  let search = basket.find((x)=>x.id===itemId);
-  
-  if(search === undefined){
+  let basket = JSON.parse(localStorage.getItem("data")) || [];
+  let search = basket.find((x) => x.id === itemId);
+
+  if (search === undefined) {
     basket.push({
-      id:itemId,
-      item:1,
+      id: itemId,
+      item: 1,
     });
+  } else {
+    search.item += 1;
   }
- 
-  else{
-       search.item+=1;
-  }
-  localStorage.setItem("data",JSON.stringify(basket))
+  localStorage.setItem("data", JSON.stringify(basket));
 }
 
 /*******************************CART PAGE*****************************************/
+let generateItems = () => {
+  let basket = JSON.parse(localStorage.getItem("data")) || [];
 
+  if (basket.length !== 0) {
+    shoppingCart.innerHTML = basket
+      .map((x) => {
+        let { id, item } = x;
+        let search = data.find((y) => y.id === id) || [];
+        return `
+          <div class="cart-item">
+            <img width=100 src=${search.img} alt="/" />
+            <div class="details">
+              <div class="title-price">
+                <h4>${search.name}</h4>
+                <h4>$${search.price}</h4>
+                <i class='bx bx-x-circle' data-item-id="${id}"></i>
+              </div>
+              <div class="qty">
+                <input type="number" value="${item}" data-item-id="${id}">
+              </div>
+              <h4 class="final_cost">0</h4>
+            </div>
+          </div>
+         `;
+      })
+      .join("");
 
-let shoppingCart = document.getElementById("shopping-cart");
+    // Add event listener to the circle icons for deletion
+    const deleteIcons = document.querySelectorAll(".bx.bx-x-circle");
+    deleteIcons.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        const itemId = icon.dataset.itemId;
 
-let generateCart = () => {
-  return (shoppingCart.innerHTML = basket
-    .map((x) => {
-      let { id, item } = x;
-      let search = data.find((y) => y.id === id) || [];
-      return `<div class="cart-item">Hello</div>`;
-    })
-    .join(""));
+        // Remove the item from the basket array
+        basket = basket.filter((item) => item.id !== itemId);
+
+        // Update the local storage with the modified basket array
+        localStorage.setItem("data", JSON.stringify(basket));
+
+        // Remove the cart item from the DOM
+        icon.closest(".cart-item").remove();
+      });
+    });
+
+    // Add event listener to the input number tags for quantity change
+    const quantityInputs = document.querySelectorAll(".qty input");
+    quantityInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        const itemId = input.dataset.itemId;
+        const quantity = parseInt(input.value);
+
+        let search = data.find((y) => y.id === itemId) || [];
+        const unitPrice = search.price;
+
+        // Calculate the new total price
+        const totalPrice = unitPrice * quantity;
+
+        // Find the corresponding "final_cost" h4 tag and update it with the new total price
+        const cartItem = input.closest(".cart-item");
+        const finalCostElement = cartItem.querySelector(".final_cost");
+        finalCostElement.textContent = `$${totalPrice}`;
+      });
+    });
+  } else {
+    shoppingCart.innerHTML = `
+      <center><h1>Cart is Empty</h1></center>`;
+  }
 };
 
-generateCart();
+generateItems();
+
+let submit=()=>{
+  alert("Your order is placed successfully")
+}
